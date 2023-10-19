@@ -2,12 +2,16 @@ import React, { useContext, useEffect, useRef, useState } from "react";
 import noteContext from '../context/notes/noteContext';
 import Noteitem from "./Noteitem";
 import Addnote from "./Addnote";
+import { useNavigate } from "react-router-dom";
+import FadeIn from "react-fade-in";
 
 const Notes = () => {
   const context = useContext(noteContext);
   const { notes, getNotes, editNode } = context;
+  let navigate = useNavigate();
 
   const [note, setnote] = useState({id:"",etitle : "", edescription : "",etag:""})
+  const [ toggle, setToggle] = useState(false);
 
   const updateNote = (CurrentNote) => {
     setnote({id:CurrentNote._id,etitle:CurrentNote.title, edescription:CurrentNote.description, etag:CurrentNote.tag})
@@ -16,7 +20,11 @@ const Notes = () => {
   }
 
   useEffect(() => {
-    getNotes()
+    if(localStorage.getItem('token')){
+      getNotes()
+    }else{
+      navigate('/login');
+    }
   }, [])
 
   const onchange = (e)=> {
@@ -27,13 +35,17 @@ const Notes = () => {
     editNode(note.id, note.etitle, note.edescription, note.etag)
     ref.current.click();
   }
+  const handleToggle = ()=>{
+    setToggle(!toggle)
+  }
   const ref = useRef(null)
 
   return (
-    <div>
-      <Addnote />
+    <div >
+      {toggle?<FadeIn delay={200} transitionDuration={600}>
+      <Addnote toggle={toggle} handleToggle={handleToggle}/>
+      </FadeIn>:""}
       <button type="button" className="btn btn-primary d-none" ref={ref} data-bs-toggle="modal" data-bs-target="#exampleModal">
-        Launch demo modal
       </button>
 
       <div className="modal fade" id="exampleModal" tabIndex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -69,14 +81,24 @@ const Notes = () => {
         </div>
       </div>
 
-      <div className="row my-3">
-        <div className="container">
-          {notes.length === 0 ? "No Notes to display":""}
+      <FadeIn delay={200} transitionDuration={600}>
+      <div className="notes">
+        <h1 className="text-center">Your Notes</h1>
+        <div className="row my-3">
+          <div className="container">
+            {notes.length === 0 ? "No Notes to display":""}
+          </div>
+          {notes?.map((note) => {
+            return <Noteitem note={note} updateNote={updateNote} key={note._id} />
+          })}
         </div>
-        {notes?.map((note) => {
-          return <Noteitem note={note} updateNote={updateNote} key={note._id} />
-        })}
+        <div className="d-flex ">
+          <button className="addNote btn butt" onClick={handleToggle}>
+            <i class="bi bi-plus-lg fa-bold"></i>
+          </button>
+        </div>
       </div>
+      </FadeIn>
     </div>
   );
 };

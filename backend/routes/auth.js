@@ -19,6 +19,9 @@ const valid = [
 
 // ROUTE 1 : Create a User using /register
 router.post('/register',valid, async (req,res)=>{
+
+    let success = false 
+
 //  If there are errors then return a bad req
     const errors=validationResult(req);
     if(!errors.isEmpty()){
@@ -28,10 +31,10 @@ router.post('/register',valid, async (req,res)=>{
     try{
     //  Check whether email is in use or not 
         let user = await User.findOne({email:req.body.email});
-        if(user){ return res.status(400).json({error:"Email is already in use"})}
+        if(user){ return res.status(400).json({success,error:"Email is already in use"})}
     
-        const salt = await bcrypt.genSalt(10);
-        const secPass = await bcrypt.hash(req.body.password,salt);
+        const salt = await bcrypt.genSalt(10); 
+        const secPass = await bcrypt.hash(req.body.password, salt);
 
     //  Create useer
         user = await User.create({
@@ -48,9 +51,9 @@ router.post('/register',valid, async (req,res)=>{
             }
         }
 
-        const authToken = jwt.sign(data,JWT_SECRET);
-
-        res.json({authToken});
+        const authToken = jwt.sign(data, JWT_SECRET);
+        success = true
+        res.json({success, authToken});
     }
     catch(error){
         console.log(error);
@@ -66,6 +69,7 @@ router.post('/register',valid, async (req,res)=>{
 router.post('/login',[
         body("password","Pass can't be blank").exists()
     ], async (req,res)=>{
+    let success = false;
 
     const errors=validationResult(req);
     if(!errors.isEmpty()){
@@ -75,14 +79,14 @@ router.post('/login',[
 //  Creating login verification
     const {email,password}=req.body;
     try {
-        let user = await User.findOne({email});
+        let user = await User.findOne({ email });
         if(!user){
-            return res.status(400).send("Wrong email or password ");
+            return res.status(400).json({success, error:"Wrong email or password "});
         }
 
-        const pwCompare= bcrypt.compare(password,user.password);
+        const pwCompare= await bcrypt.compare(password, user.password);
         if(!pwCompare){
-            return res.status(400).send("Wrong email or password ");
+            return res.status(400).json({success, error:"Wrong password "});
         }
 
         const data={
@@ -92,8 +96,8 @@ router.post('/login',[
         }
 
         const authToken = jwt.sign(data,JWT_SECRET);
-
-        res.json({authToken});
+        success = true;
+        res.json({success, authToken});
     } catch(error){
         console.log(error);
         res.status(500).send("Error Occured");

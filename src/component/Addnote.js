@@ -1,54 +1,51 @@
 import React, { useState, useContext} from "react";
 import noteContext from '../context/notes/noteContext';
 
-function Addnote() {
+function Addnote(props) {
     const context = useContext(noteContext);
     const { notes, addNote } = context;
+    const { toggle, handleToggle } = props;
 
     const [note, setnote] = useState({title : "", description : ""})
 
     const handleClick = (e) => {
         e.preventDefault()
         addNote(note.title, note.description, note.tag)
+        handleToggle()
     }
 
     const onchange = (e)=> {
         setnote({...note, [e.target.id]: e.target.value})
     }
 
+
+    if(toggle)
     return (
-        <div>
+        <div className="addnote">
             <h1 className="text-center">Add a Note</h1>
-            <form>
+            <form >
                 <div className="form-group">
-                    <label htmlFor="title">Title</label>
-                    <input type="text" className="form-control" id="title" aria-describedby="emailHelp" placeholder="Enter Note" onChange={onchange} />
+                    <input type="text" className="" id="title" aria-describedby="emailHelp" placeholder="Enter Title" onChange={onchange} />
                 </div>
                 <div className="form-group">
-                    <label htmlFor="description">Desription</label>
                     <input
                         type="text"
-                        className="form-control"
+                        className=""
                         id="description"
-                        placeholder="Password"
+                        placeholder="Enter description"
                         onChange={onchange}
                     />
                 </div>
-                <div className="form-check">
-                    <input
-                        type="checkbox"
-                        className="form-check-input"
-                        id="exampleCheck1"
-                    />
-                    <label className="form-check-label" htmlFor="exampleCheck1">
-                        Check me out
-                    </label>
+                <div className="d-flex justify-content-between">
+                    <button disabled = {note.title.length <3 || note.description.length<5} type="submit" className="btn" onClick={handleClick}>
+                        <i class="bi bi-check-lg"></i>
+                    </button>
+                    <button type="submit" className="btn" onClick={handleToggle}>
+                        <i class="bi bi-x"></i>
+                    </button>
                 </div>
-                <button disabled = {note.title.length <3 || note.description.length<5} type="submit" className="btn btn-primary" onClick={handleClick}>
-                    Add Note
-                </button>
             </form>
-            <h1 className="text-center">Your Notes</h1>
+           
         </div>
     );
 }

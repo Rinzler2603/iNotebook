@@ -1,4 +1,223 @@
+body{
+    /* background: linear-gradient(rgb(236, 236, 196),rgb(234, 234, 49)); */
+    margin-bottom: 200px;
+}
+
 i{
     margin: 2px;
     cursor: pointer;
+}
+
+.navbar{
+    box-shadow: #bcbaba 2px 2px 10px;
+
+}
+.navbar-brand{
+    font-size: 2rem;
+}
+
+/* Login page Styling  */
+
+.login{
+    background-color: white;
+    border: 2px solid rgb(210, 210, 210);
+    border-radius: 20px;
+    box-shadow: #bcbaba 2px 2px 10px;
+    width: 50%;
+    margin: 5% auto;
+}
+
+.login h1{
+    color: #4b4b4b !important;
+}
+
+.login form{
+    margin: 16%
+}
+
+.login .form-group{
+    margin: 5%
+}
+
+.login input{
+    width: 100%;
+    margin: 10% auto;
+    font-family: monospace;
+    padding: 5px;
+    border: none;
+    border-bottom: 4px solid grey;
+    outline: none;
+    font-size: 1.2rem;
+    transition: border-bottom-color 0.3s ease-in;
+    display: block;
+}
+
+.login input:active,
+.login input:focus,
+.login input:hover {
+	border-bottom-color: #f6d500;
+}
+
+.login input::placeholder {
+    color: rgb(176, 176, 176);
+    transition: color 0.3s ease-in;    
+}
+
+.login input:focus::-webkit-input-placeholder,
+.login input:active::-webkit-input-placeholder,
+.login input:hover::-webkit-input-placeholder{
+    color: #f6d500;
+}
+
+.login-but{
+    color: white;
+    font-weight: bolder;
+    font-size: xxlarge;
+    width: 80%;
+    padding: 3%;
+    border: 2px solid #f6d500;
+    background-color: #f6d500;
+    box-shadow: #f6d500 4px 4px 30px;
+    border-radius: 2rem;
+}
+
+.login-but:hover{
+    color: white;
+    background-color: #ac9608;
+    box-shadow: #f6d500 4px 4px 30px;
+}
+
+
+/* Note Item */
+.note-item{
+    box-shadow: #bcbaba 2px 2px 10px;
+    transition : transform 0.3s ease-in;
+    border-radius: 10px;
+}
+
+.note-item .card-title{
+    color: #af9800;
+}
+
+.note-item:hover{
+    transform: scale(110%, 110%);
+    box-shadow: #5a5757 2px 2px 20px;
+}
+
+.note-item .ico{
+    border-radius: 25px;
+    padding: 3px;
+    margin: 0 0.1rem;
+    /* visibility: hidden; */
+    opacity: 0;
+    transition: visibility 0.5s, opacity 0.5s,background-color 0.2s ease-in;
+}
+
+.note-item:hover  .ico{
+    /* visibility: visible; */
+    opacity: 1;
+    color: rgb(108, 108, 108);
+}
+
+.ico:hover{
+    color: #000000 !important;
+    background-color: #adadad;
+}
+
+
+/* Addnote Component */
+
+.addnote h1{
+    color: #4b4b4b !important;
+    margin: 2rem;
+}
+.addnote{
+    background-color: white;
+    width: 50%;
+    margin: 5% auto;
+}
+
+.addnote h1{
+    color: #4b4b4b !important;
+}
+
+.addnote form{
+    margin: 16%
+}
+
+.addnote .form-group{
+    margin: 5%
+}
+
+.addnote input{
+    width: 100%;
+    margin: 10% auto;
+    font-family: monospace;
+    padding: 5px;
+    border: none;
+    border-bottom: 4px solid grey;
+    outline: none;
+    font-size: 1.2rem;
+    transition: border-bottom-color 0.3s ease-in;
+    display: block;
+}
+
+.addnote input:active,
+.addnote input:focus,
+.addnote input:hover {
+	border-bottom-color: #f6d500;
+}
+
+.addnote input::placeholder {
+    color: rgb(176, 176, 176);
+    transition: color 0.3s ease-in;    
+}
+
+.addnote input:focus::-webkit-input-placeholder,
+.addnote input:active::-webkit-input-placeholder,
+.addnote input:hover::-webkit-input-placeholder{
+    color: #f6d500;
+}
+
+.addnote button{
+    border: none;
+    padding: none;
+    font-size: 35px;
+    color: white;
+    background-color: #e1c513;
+    border-radius: 4px;
+    width: 25%;
+}
+
+/* Addnote button */
+.butt{
+    background-color: #d9b549;
+    padding: 13px 19px;
+    border-radius: 50%;
+    color: white;
+}
+.addNote{
+    position: fixed;
+    bottom: 5rem;
+    left: 5rem
+}
+.addNote {
+    font-size: 35px;
+    transition: transform 0.2s ease-in;
+}
+.addNote:hover{
+    transform: rotate(90deg);
+}
+
+.butt:hover{
+    
+    background-color: #f6d500;
+    color: white;
+}
+
+/* Notes Component */
+
+.notes h1{
+    color: #4b4b4b !important;
+    margin: 4rem
 }
